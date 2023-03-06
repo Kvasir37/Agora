@@ -535,8 +535,50 @@ public function supprimerJeux(string $refJeu): void {
         .$e->getmessage().'</p></div>');
         }
     }
-}
 
+/**
+* Retourne tous les genres sous forme d'un tableau d'objets
+* avec également le nombre de jeux de ce genre
+*
+* @return le tableau d'objets (Genre)
+*/
+public function getLesGenresComplet() {
+    $requete = 'SELECT G.idGenre as identifiant, G.libGenre as libelle, G.idSpecialiste AS
+   idSpecialiste, CONCAT(P.prenomMembre, " ", P.nomMembre) AS nomSpecialiste,
+    (SELECT COUNT(refJeu) FROM jeu_video AS J WHERE J.idGenre = G.idGenre) AS nbJeux
+    FROM genre AS G
+    LEFT OUTER JOIN membre AS P ON G.idSpecialiste = P.idMembre
+    ORDER BY G.libGenre';
+    try {
+    $resultat = PdoJeux::$monPdo->query($requete);
+    $tbGenres = $resultat->fetchAll();
+    return $tbGenres;
+    }
+    catch (PDOException $e) {
+    die('<div class = "erreur">Erreur dans la requête !<p>'
+    .$e->getmessage().'</p></div>');
+    }
+   }
+   /**
+   * Retourne l'identifiant et le nom complet de toutes les personnes sous forme d'un tableau d'objets
+   *
+   * @return le tableau d'objets
+   */
+   public function getLesPersonnes() {
+    $requete = 'SELECT idMembre as identifiant, CONCAT(prenomMembre;, " ", nomMembre) AS
+   libelle
+    FROM personne
+    ORDER BY nomMembre';
+   try {
+    $resultat = PdoJeux::$monPdo->query($requete);
+    $tbPersonnes = $resultat->fetchAll();
+    return $tbPersonnes;
+   }
+   catch (PDOException $e) {
+    die('<div class = "erreur">Erreur dans la requête !<p>'
+    .$e->getmessage().'</p></div>');
+   }
+    }
    
-
+}
 ?>

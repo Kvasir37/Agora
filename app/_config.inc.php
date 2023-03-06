@@ -17,4 +17,7 @@ define('DB_DATABASE', 'agora');		// nom de la base de données
 define('DB_USER', 'userAgoraBo');			// nom d'utilisateur userAgoraBo
 define('DB_PWD', 'FM4ILxgMhhoOKFv9');              	// mot de passe FM4ILxgMhhoOKFv9
 define('DSN','mysql:dbname='.DB_DATABASE.';host='.DB_SERVER);
+// constantes pour twig
+define('TWIG_CACHE', false); // mise en cache, en production à remplacer par '/path/to/compilation_cache'
+define('TWIG_DEBUG', true); // mode debug
 ?>
